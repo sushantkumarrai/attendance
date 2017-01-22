@@ -1,0 +1,28 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.pkpra_000.attendence.RemoveFragment">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/remove_fragment"
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
+
+    <Spinner
+        android:id="@+id/rspinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dip"
+        android:layout_marginLeft="8dip"
+        android:layout_marginRight="8dip"/>
+    <Button
+        android:id="@+id/rbutton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/remove_subject" />
+
+</LinearLayout>

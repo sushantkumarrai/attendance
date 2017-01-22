@@ -1,0 +1,46 @@
+<resources>
+    <string name="app_name">Attendance</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+
+    <string-array name="titles">
+        <item>Home</item>
+        <item>Update Attendance</item>
+        <item>Check Attendance</item>
+        <item>Add Subject</item>
+        <item>Remove Subject</item>
+    </string-array>
+    <string name="open_drawer">Open Drawer</string>
+    <string name="close_drawer">Close Drawer</string>
+    <string name="subject">Subject</string>
+    <string name="attendance">Attendance</string>
+    <string name="date">Date</string>
+    <string name="update_attendance">Update Attendance</string>
+    <string-array name="spinner_values">
+        <item>Operating System</item>
+        <item>Compiler Design</item>
+        <item>.Net</item>
+        <item>Artificial Intelligence</item>
+        <item>Graph Theory</item>
+        <item>Cryptography</item>
+    </string-array>
+    <string name="input_subject">Input Subject</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_subject">Add Subject</string>
+    <string name="hint_date">Date</string>
+    <string name="choose_subject">Choose Subject</string>
+    <string name="spinner_title">Title</string>
+    <string name="pick_date">Pick Date</string>
+    <string name="choose_date">Choose Date</string>
+    <string-array name="spat">
+        <item>A</item>
+        <item>P</item>
+    </string-array>
+    <string name="from">FROM</string>
+    <string name="to">TO</string>
+    <string name="view_attendance">VIEW ATTENDANCE</string>
+    <string name="remove_fragment">CHOOSE SUBJECT TO REMOVE FROM ATTENDANCE </string>
+    <string name="remove_subject">Remove Subject</string>
+</resources>

@@ -1,0 +1,55 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.pkpra_000.attendence.CheckFragment">
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/choose_subject"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+    <Spinner
+        android:id="@+id/spcheck"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dip"
+        android:layout_marginLeft="8dip"
+        android:layout_marginRight="8dip">
+        </Spinner>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/from"/>
+    <EditText
+        android:id="@+id/fromdate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/choose_date"
+        android:focusable="false"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/to"/>
+    <EditText
+        android:id="@+id/todate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/choose_date"
+        android:focusable="false"/>
+    <Button
+        android:id="@+id/view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/view_attendance" />
+    <TextView
+        android:id="@+id/result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+
+</LinearLayout>

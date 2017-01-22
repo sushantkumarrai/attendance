@@ -1,0 +1,55 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.pkpra_000.attendence.UpdateFragment">
+
+
+    <TextView
+        android:id="@+id/subject"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/subject"/>
+
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dip"
+        android:layout_marginLeft="8dip"
+        android:layout_marginRight="8dip">
+    </Spinner>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/date"/>
+   <EditText
+       android:id="@+id/edit"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:hint="@string/choose_date"
+       android:focusable="false"
+
+       />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/attendance"/>
+
+
+    <Spinner
+        android:id="@+id/spat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:entries="@array/spat"/>
+
+    <Button
+        android:id="@+id/updatebutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/update_attendance" />
+
+</LinearLayout>
