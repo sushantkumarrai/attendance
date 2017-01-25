@@ -53,6 +53,13 @@ public class RemoveFragment extends Fragment {
                 SQLiteDatabase db1=databseHelper.getWritableDatabase();
                 db1.delete("ATTENDENCE","SUB_ID=?",new String[] {Integer.toString(i)});
                 db1.delete("SUBJECT","_id=?",new String[] {Integer.toString(i)});
+                Toast toast=Toast.makeText(getContext(),"subject is removed="+rsubject,Toast.LENGTH_SHORT);
+                toast.show();
+                ArrayList<String> my_array1=new ArrayList<String>();
+                my_array1 = getTableValues();
+                ArrayAdapter my_Adapter = new ArrayAdapter(getContext(), R.layout.spinner_row,
+                        my_array1);
+                spinner.setAdapter(my_Adapter);
                 cursor.close();
                 db1.close();
 

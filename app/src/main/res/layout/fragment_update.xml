@@ -10,12 +10,13 @@
         android:id="@+id/subject"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/subject"/>
+        android:text="@string/subject"
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
 
 
     <Spinner
         android:id="@+id/spinner"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dip"
         android:layout_marginLeft="8dip"
@@ -24,27 +25,30 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/date"/>
+        android:text="@string/date"
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
    <EditText
        android:id="@+id/edit"
        android:layout_width="match_parent"
        android:layout_height="wrap_content"
        android:hint="@string/choose_date"
-       android:focusable="false"
+       android:focusable="true"
 
        />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/attendance"/>
+        android:text="@string/attendance"
+        android:textAppearance="?android:attr/textAppearanceLarge"/>
 
 
     <Spinner
         android:id="@+id/spat"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:entries="@array/spat"/>
+        android:entries="@array/spat"
+        />
 
     <Button
         android:id="@+id/updatebutton"

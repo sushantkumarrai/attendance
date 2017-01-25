@@ -36,6 +36,7 @@ private static EditText editText,editText1;
    private static Spinner spinner;
    private static EditText fromDate;
     private static EditText toDate;
+    private static  TextView resultView;
 
     public static  class  SelectDateFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
@@ -63,6 +64,7 @@ private static EditText editText,editText1;
             //  EditText tf=(EditText)getView().findViewById(R.id.edit);
 
             fromDate.setText(date);
+            fromDate.setError(null);
 
         }
     }
@@ -93,6 +95,7 @@ private static EditText editText,editText1;
 
 
             toDate.setText(date);
+            toDate.setError(null);
         }
     }
     @RequiresApi(api = Build.VERSION_CODES.M)
@@ -101,9 +104,12 @@ private static EditText editText,editText1;
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         final View view=inflater.inflate(R.layout.fragment_check, container, false);
+
           spinner=(Spinner)view.findViewById(R.id.spcheck) ;
           fromDate=(EditText)view.findViewById(R.id.fromdate);
           toDate=(EditText)view.findViewById(R.id.todate);
+           resultView=(TextView)view.findViewById(R.id.result);
+
         Button button = (Button) view.findViewById(R.id.view);
         ArrayList<String> my_array = new ArrayList<String>();
         my_array = getTableValues();
@@ -133,7 +139,8 @@ private static EditText editText,editText1;
             @Override
             public void onClick(View v) {
                 try {
-                    int i=0,p=0,t=0;
+                    int i=0,p=0,t=0,atr=1;
+                    resultView.setText(null);
                     String subject = String.valueOf(spinner.getSelectedItem());
                     String fD=fromDate.getText().toString();
                     if(TextUtils.isEmpty(fD)) {
@@ -145,36 +152,53 @@ private static EditText editText,editText1;
                         toDate.setError("please enter last date");
                         return;
                     }
+                    if (fD.compareTo(tD) > 0){
+                        Toast toast=Toast.makeText(getContext(),"From date must old then To date",Toast.LENGTH_LONG);
+                        toast.show();
+                        return;
+                    }
+
                     SQLiteOpenHelper databseHelper = new DatabaseHandler(getContext());
                     SQLiteDatabase db = databseHelper.getReadableDatabase();
                     Cursor cursor = db.query("SUBJECT", new String[]{"_id"}, "SUBJECT_NAME=?", new String[]{subject}, null, null, null);
                     if (cursor.moveToFirst()){
                         do{
-                            i = cursor.getInt(cursor.getColumnIndex("_id"));
-                            // do what ever you want here
+                            i = cursor.getInt(0);
+
                         }while(cursor.moveToNext());
                     }
                     cursor.close();
-                    Cursor present=db.rawQuery("SELECT COUNT(SUB_ID) FROM ATTENDENCE WHERE (PRESENT=1 AND SUB_ID=i)AND(DATE >=fD AND DATE<=tD)",null);
+                    String where="SUB_ID=? AND PRESENT=? AND DATE>=? AND DATE<=?";
+                    Cursor present=db.query(TABLE1,new String[] {"COUNT(SUB_ID)"},where,new String[] {Integer.toString(i),Integer.toString(atr),fD,tD},null,null,null);
+                   // Cursor present=db.rawQuery("SELECT COUNT(SUB_ID) FROM ATTENDENCE WHERE (PRESENT=1 AND SUB_ID='i')AND(DATE >='fD' AND DATE<='tD')",null);
                     if(present.moveToFirst()){
                         do{
                             p=present.getInt(0);
                         }while(present.moveToNext());
                     }
                     present.close();
-                    Cursor total=db.rawQuery("SELECT COUNT(TOTAL) FROM ATTENDENCE WHERE (SUB_ID=i)AND (DATE>=fD AND DATE<=tD",null);
+                    String where1="SUB_ID=? AND DATE>=? AND DATE<=?";
+                    Cursor total=db.query(TABLE1,new String[] {"COUNT(SUB_ID)"},where1,new String[] {Integer.toString(i),fD,tD},null,null,null,null);
+                   // Cursor total=db.rawQuery("SELECT COUNT(TOTAL) FROM ATTENDENCE WHERE (SUB_ID='i')AND (DATE>='fD' AND DATE<='tD')",null);
                     if(total.moveToFirst()){
                         do{
                             t=total.getInt(0);
                         }while(total.moveToNext());
                     }
                     total.close();
+                    db.close();
                     int totalClass=t;
                     int totalPresent=p;
                     int totalAbsent=t-p;
-                    float attenPresent=((p/t)*100);
-                    TextView resultView=(TextView)view.findViewById(R.id.result);
-                    resultView.setText("Total no of classes:"+totalClass+"Total present days:"+totalPresent+"Total Absent:"+totalAbsent+"Attendence (in%):"+attenPresent );
+                    float attenPresent=0.0f;
+                    try {
+                         attenPresent = (((float)p * 100)/(float)t);
+                    }catch (ArithmeticException e){
+                        Toast toast=Toast.makeText(getContext(),"no attendence",Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+
+                    resultView.setText("Total no of classes:"+totalClass+"\nTotal present days:"+totalPresent+"\nTotal Absent:"+totalAbsent+"\nAttendance (in%):"+attenPresent+"%" );
 
 
                 }catch(SQLiteException e){

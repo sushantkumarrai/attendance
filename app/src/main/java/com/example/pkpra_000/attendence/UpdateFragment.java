@@ -17,6 +17,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -67,6 +68,7 @@ public class UpdateFragment extends Fragment {
             //  EditText tf=(EditText)getView().findViewById(R.id.edit);
 
             editText.setText(date);
+            editText.setError(null);
         }
     }
 
@@ -103,6 +105,10 @@ public class UpdateFragment extends Fragment {
                                                   subject = String.valueOf(spinner.getSelectedItem());
                                                   editText = (EditText) view.findViewById(R.id.edit);
                                                   date = editText.getText().toString();
+                                                  if(TextUtils.isEmpty(date)) {
+                                                      editText.setError("PLEASE ENTER  DATE");
+                                                      return;
+                                                  }
                                                   attendance = String.valueOf(spinner1.getSelectedItem());
                                                   System.out.println("subject:"+subject);
                                                   if (attendance.equals("A")) {
@@ -116,7 +122,7 @@ public class UpdateFragment extends Fragment {
                                                   Cursor cursor = db.query("SUBJECT", new String[]{"_id"}, "SUBJECT_NAME=?", new String[]{subject}, null, null, null);
                                                   if (cursor.moveToFirst()){
                                                       do{
-                                                           i = cursor.getInt(cursor.getColumnIndex("_id"));
+                                                           i = cursor.getInt(0);
                                                           // do what ever you want here
                                                       }while(cursor.moveToNext());
                                                   }

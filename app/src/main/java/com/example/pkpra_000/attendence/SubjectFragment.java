@@ -50,6 +50,7 @@ public class SubjectFragment extends Fragment {
                     db.insert("SUBJECT",null,contentValues);
                     Toast toast=Toast.makeText(getContext(),"Entry is done",Toast.LENGTH_SHORT);
                     toast.show();
+                    editText.setText(null);
                 }catch(SQLiteException e) {
                     Toast toast =Toast.makeText(getContext(),"Database unavailable",Toast.LENGTH_SHORT);
                     toast.show();
