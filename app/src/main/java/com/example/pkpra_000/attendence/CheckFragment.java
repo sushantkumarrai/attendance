@@ -4,6 +4,7 @@ package com.example.pkpra_000.attendence;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
@@ -17,10 +18,13 @@ import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -37,6 +41,7 @@ private static EditText editText,editText1;
    private static EditText fromDate;
     private static EditText toDate;
     private static  TextView resultView;
+    private static  ListView listView;
 
     public static  class  SelectDateFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
@@ -57,11 +62,9 @@ private static EditText editText,editText1;
             populateSetDate(yy, mm+1, dd);
         }
         public void populateSetDate(int year, int month, int day) {
-            //set the date here
+
             String date = String.valueOf(year) +":"+String.valueOf(month)
                     +":"+String.valueOf(day);
-
-            //  EditText tf=(EditText)getView().findViewById(R.id.edit);
 
             fromDate.setText(date);
             fromDate.setError(null);
@@ -87,11 +90,11 @@ private static EditText editText,editText1;
             populateSetDate(yy, mm+1, dd);
         }
         public void populateSetDate(int year, int month, int day) {
-            //set the date here
+
             String date = String.valueOf(year) +":"+String.valueOf(month)
                     +":"+String.valueOf(day);
 
-            //  EditText tf=(EditText)getView().findViewById(R.id.edit);
+
 
 
             toDate.setText(date);
@@ -102,13 +105,14 @@ private static EditText editText,editText1;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         final View view=inflater.inflate(R.layout.fragment_check, container, false);
-
-          spinner=(Spinner)view.findViewById(R.id.spcheck) ;
+       //  getActivity().getWindow().setSoftInputMode(
+               // WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+        spinner=(Spinner)view.findViewById(R.id.spcheck) ;
           fromDate=(EditText)view.findViewById(R.id.fromdate);
           toDate=(EditText)view.findViewById(R.id.todate);
            resultView=(TextView)view.findViewById(R.id.result);
+           listView = (ListView)view.findViewById(R.id.list);
 
         Button button = (Button) view.findViewById(R.id.view);
         ArrayList<String> my_array = new ArrayList<String>();
@@ -119,6 +123,7 @@ private static EditText editText,editText1;
 
 
         fromDate.setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 DialogFragment pickerFragment = new SelectDateFragment();
@@ -170,7 +175,7 @@ private static EditText editText,editText1;
                     cursor.close();
                     String where="SUB_ID=? AND PRESENT=? AND DATE>=? AND DATE<=?";
                     Cursor present=db.query(TABLE1,new String[] {"COUNT(SUB_ID)"},where,new String[] {Integer.toString(i),Integer.toString(atr),fD,tD},null,null,null);
-                   // Cursor present=db.rawQuery("SELECT COUNT(SUB_ID) FROM ATTENDENCE WHERE (PRESENT=1 AND SUB_ID='i')AND(DATE >='fD' AND DATE<='tD')",null);
+
                     if(present.moveToFirst()){
                         do{
                             p=present.getInt(0);
@@ -179,13 +184,20 @@ private static EditText editText,editText1;
                     present.close();
                     String where1="SUB_ID=? AND DATE>=? AND DATE<=?";
                     Cursor total=db.query(TABLE1,new String[] {"COUNT(SUB_ID)"},where1,new String[] {Integer.toString(i),fD,tD},null,null,null,null);
-                   // Cursor total=db.rawQuery("SELECT COUNT(TOTAL) FROM ATTENDENCE WHERE (SUB_ID='i')AND (DATE>='fD' AND DATE<='tD')",null);
+
                     if(total.moveToFirst()){
                         do{
                             t=total.getInt(0);
                         }while(total.moveToNext());
                     }
                     total.close();
+
+                    ArrayList<String> arrayP = new ArrayList<String>();
+                    arrayP = getTableValues1(i,fD,tD);
+                    ArrayAdapter my_Adapter = new ArrayAdapter(getContext(), R.layout.list_present,
+                            arrayP);
+
+                    listView.setAdapter(my_Adapter);
                     db.close();
                     int totalClass=t;
                     int totalPresent=p;
@@ -235,6 +247,41 @@ private static EditText editText,editText1;
         }
         return array;
     }
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    public ArrayList<String> getTableValues1(int i,String fD,String tD) {
 
+        ArrayList<String> array = new ArrayList<String>();
+        try {
+            SQLiteOpenHelper sqLiteOpenHelper=new DatabaseHandler(getContext());
+            SQLiteDatabase mydb =sqLiteOpenHelper.getReadableDatabase();
+            String where2="SUB_ID=? AND DATE>=? AND DATE<=?";
+            Cursor att=mydb.query(TABLE1,new String[] {"DATE,PRESENT"},where2,new String[] {Integer.toString(i),fD,tD},null,null,null,null);
+            System.out.println("COUNT : " + att.getCount());
+
+            if (att.moveToFirst()) {
+                do {
+
+                    String date = att.getString(0);
+                    String present=att.getString(1);
+                    if(present.equals("0")){
+                        present="A";
+                    }
+                    if(present.equals("1")){
+                        present="P";
+                    }
+
+                    array.add(date);
+                    array.add(present);
+
+                } while (att.moveToNext());
+            }
+            att.close();
+            mydb.close();
+        } catch (Exception e) {
+            Toast.makeText(getContext(), "Error encountered.",
+                    Toast.LENGTH_LONG);
+        }
+        return array;
+    }
 
 }

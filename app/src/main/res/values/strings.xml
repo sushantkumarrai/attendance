@@ -35,7 +35,7 @@
     <string name="pick_date">Pick Date</string>
     <string name="choose_date">Choose Date</string>
     <string-array name="spat">
-        <item >A</item>
+        <item>A</item>
         <item>P</item>
     </string-array>
     <string name="from">FROM</string>

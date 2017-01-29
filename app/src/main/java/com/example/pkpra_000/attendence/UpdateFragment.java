@@ -18,6 +18,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
+import android.text.method.KeyListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +43,7 @@ public class UpdateFragment extends Fragment {
     String date;
     String attendance;
 
-    public static  class  SelectDateFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
+ /*  public static  class  SelectDateFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {
 
 
         @RequiresApi(api = Build.VERSION_CODES.N)
@@ -70,7 +71,7 @@ public class UpdateFragment extends Fragment {
             editText.setText(date);
             editText.setError(null);
         }
-    }
+    }*/
 
 
     @TargetApi(Build.VERSION_CODES.N)
@@ -155,14 +156,19 @@ public class UpdateFragment extends Fragment {
 
 
          editText= (EditText)view.findViewById(R.id.edit);
-        editText.setOnClickListener(new View.OnClickListener() {
+        SimpleDateFormat sdf = new SimpleDateFormat( "yyyy:MM:dd" );
+        editText.setText( sdf.format( new Date() ));
+        editText.setError(null);
+        KeyListener mKeyListener = editText.getKeyListener();
+        editText.setKeyListener(null);
+      /*  editText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DialogFragment pickerFragment = new SelectDateFragment();
                 pickerFragment.show(getFragmentManager(),"DatePicker");
 
             }
-        });
+        });*/
 
 
 

@@ -26,13 +26,8 @@ public class DatabaseHandler extends SQLiteOpenHelper {
             db.execSQL("CREATE TABLE SUBJECT ("+"_id INTEGER PRIMARY KEY AUTOINCREMENT,"+"SUBJECT_NAME TEXT );");
             db.execSQL("CREATE TABLE ATTENDENCE("+"SUB_ID INTEGER,"+"DATE TEXT,"+"PRESENT INTEGER,"+"TOTAL INTEGER,"+"FOREIGN KEY(SUB_ID) REFERENCES SUBJECT(_id));");
 
-            /*CREATE TABLE track(
-  trackid     INTEGER,
-  trackname   TEXT,
-  trackartist INTEGER,
-  FOREIGN KEY(trackartist) REFERENCES artist(artistid)
-);*/
-           // db.execSQL("CREATE TABLE DETAILS ("+"_id INTEGER FOREIGN KEY,"+"DATE_OF_ATTENDENCE DATE PRIMARY KEY,"+"PRESENT INTEGER,"+"ABSENT INTEGER,"+"TOTAL INTEGER); ");
+
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
